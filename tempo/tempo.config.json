@@ -1,0 +1,14 @@
+{
+  "paths": {
+    "canvases": "./designs"
+  },
+  "scripts": {
+    "install": "npm install",
+    "start": "npm run dev"
+  },
+  "apps": [
+    {
+      "start": "npx expo start --port ${APP_PORT}"
+    }
+  ]
+}

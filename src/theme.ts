@@ -49,6 +49,21 @@ export const fonts = {
   displaySemi: 'BarlowCondensed_600SemiBold',
 } as const;
 
+// v2 "quiet" direction: warm paper, near-black ink, maroon as a single accent.
+export const quiet = {
+  paper: '#FAF8F5',
+  surface: '#FFFFFF',
+  sunk: '#F2EFEB',
+  ink: '#151112',
+  ink2: '#6B6361',
+  ink3: '#A39B98',
+  hair: '#ECE7E2',
+  accent: colors.maroon,
+  night: '#0C0A0A',
+  nightSurface: '#181414',
+  nightHair: '#2A2424',
+} as const;
+
 export type NodeKey = 'tamu' | 'bryan' | 'cstat';
 
 export const nodeColors: Record<NodeKey, { solid: string; soft: string; label: string }> = {

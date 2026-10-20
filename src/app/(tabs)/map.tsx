@@ -18,7 +18,6 @@ const PLACES: MapPlace[] = [
   { id: 'msc', label: 'MSC', lat: 30.6123, lng: -96.3415, kind: 'venue', href: '/node/msc' },
   { id: 'zachry', label: 'Zachry', lat: 30.6212, lng: -96.3407, kind: 'venue', href: '/node/zachry' },
   { id: 'sbisa', label: 'Sbisa', lat: 30.6171, lng: -96.3437, kind: 'dining' },
-  { id: 'reed', label: 'Reed Arena', lat: 30.6063, lng: -96.3462, kind: 'venue', href: '/node/reed-arena' },
   { id: 'bus', label: 'Bus 12', lat: 30.6148, lng: -96.3372, kind: 'transit' },
 ];
 

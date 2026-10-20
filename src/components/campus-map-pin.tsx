@@ -21,14 +21,19 @@ export type CampusMapProps = {
   onSelect: (place: MapPlace) => void;
 };
 
-// Center of the College Station campus view (between MSC and Kyle Field).
-export const CAMPUS_CENTER = { lat: 30.6128, lng: -96.3418 };
+// Campus focus point (Evans Library / Academic Plaza); it sits in the visible
+// band between the search bar and the bottom sheet.
+export const CAMPUS_CENTER = { lat: 30.616, lng: -96.3418 };
 
 // Shared marker art so Apple Maps (iOS) and the web tile map look identical.
 export function MapPin({ place, onPress }: { place: MapPlace; onPress?: () => void }) {
   if (place.kind === 'stadium') {
     return (
       <Pressable onPress={onPress} style={styles.callout}>
+        <View style={styles.calloutPin}>
+          <Text style={styles.calloutPinText}>A&M</Text>
+        </View>
+        <View style={styles.calloutStem} />
         <View style={styles.calloutCard}>
           <Thumb source={photos.football} size={40} radius={11} />
           <View>
@@ -39,10 +44,6 @@ export function MapPin({ place, onPress }: { place: MapPlace; onPress?: () => vo
             <LiveDot size={6} />
             <Text style={styles.calloutLiveText}>11.8K</Text>
           </View>
-        </View>
-        <View style={styles.calloutStem} />
-        <View style={styles.calloutPin}>
-          <Text style={styles.calloutPinText}>A&M</Text>
         </View>
       </Pressable>
     );

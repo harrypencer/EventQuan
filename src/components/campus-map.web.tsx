@@ -5,12 +5,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { CAMPUS_CENTER, MapPin, YouDot, type CampusMapProps } from '@/components/campus-map-pin';
 import { fonts } from '@/theme';
 
-// Web has no MapKit without an Apple Maps JS token, so the canvas preview uses
-// real OpenStreetMap tiles (CARTO Voyager) at the same region as iOS.
-const ZOOM = 16;
-const SCALE = 0.82;
+// Web has no MapKit without an Apple MapKit JS token, so the canvas preview uses
+// real OpenStreetMap tiles (Stadia OSM Bright, keyless on localhost) at the same
+// region iOS shows in Apple Maps.
+const ZOOM = 15;
+const SCALE = 0.8;
 const TILE = 256;
-const VIEW_OFFSET_Y = -150; // lift the campus above the bottom sheet
+const VIEW_OFFSET_Y = -110; // lift the campus above the bottom sheet
 
 function project(lat: number, lng: number) {
   const n = TILE * 2 ** ZOOM;
@@ -40,7 +41,7 @@ export function CampusMap({ places, you, onSelect }: CampusMapProps) {
       const ty = y0 + r;
       tiles.push({
         key: `${tx}-${ty}`,
-        uri: `https://${'abcd'[(tx + ty) % 4]}.basemaps.cartocdn.com/rastertiles/voyager/${ZOOM}/${tx}/${ty}@2x.png`,
+        uri: `https://tiles.stadiamaps.com/tiles/osm_bright/${ZOOM}/${tx}/${ty}@2x.png`,
         left: (tx * TILE - originX) * SCALE,
         top: (ty * TILE - originY) * SCALE,
       });
@@ -69,13 +70,13 @@ export function CampusMap({ places, you, onSelect }: CampusMapProps) {
             key={p.id}
             style={[
               styles.marker,
-              stadium ? { left: pos.left - 110, top: pos.top - 118, width: 220 } : { left: pos.left - 40, top: pos.top - 16, width: 80 },
+              stadium ? { left: pos.left - 110, top: pos.top - 22, width: 220 } : { left: pos.left - 40, top: pos.top - 16, width: 80 },
             ]}>
             <MapPin place={p} onPress={() => onSelect(p)} />
           </View>
         );
       })}
-      <Text style={styles.attribution}>© OpenStreetMap · © CARTO</Text>
+      <Text style={styles.attribution}>© Stadia Maps © OpenMapTiles © OpenStreetMap</Text>
     </View>
   );
 }
@@ -83,5 +84,5 @@ export function CampusMap({ places, you, onSelect }: CampusMapProps) {
 const styles = StyleSheet.create({
   map: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, backgroundColor: '#F2EFE9', overflow: 'hidden' },
   marker: { position: 'absolute', alignItems: 'center' },
-  attribution: { position: 'absolute', right: 8, bottom: 300, fontFamily: fonts.medium, fontSize: 9, color: 'rgba(0,0,0,0.45)' },
+  attribution: { position: 'absolute', left: 10, bottom: 334, fontFamily: fonts.medium, fontSize: 9, color: 'rgba(0,0,0,0.45)' },
 });

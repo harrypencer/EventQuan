@@ -69,6 +69,78 @@ export default function GenerationCanvas() {
         route="/profile"
         layout={{ x: 1880, y: 984, width: 390, height: 844 }}
       />
+      <RouteStoryboard
+        id="v2-welcome"
+        name="v2 · Welcome"
+        route="/v2/welcome"
+        layout={{ x: 40, y: 2481, width: 390, height: 844 }}
+      />
+      <RouteStoryboard
+        id="v2-home"
+        name="v2 · Home"
+        route="/v2"
+        layout={{ x: 510, y: 2481, width: 390, height: 844 }}
+      />
+      <RouteStoryboard
+        id="v2-discover"
+        name="v2 · Discover"
+        route="/v2/discover"
+        layout={{ x: 980, y: 2481, width: 390, height: 844 }}
+      />
+      <RouteStoryboard
+        id="v2-event"
+        name="v2 · Event"
+        route="/v2/event"
+        layout={{ x: 1450, y: 2481, width: 390, height: 844 }}
+      />
+      <RouteStoryboard
+        id="v2-ticket"
+        name="v2 · Gameday pass"
+        route="/v2/ticket"
+        layout={{ x: 1920, y: 2481, width: 390, height: 844 }}
+      />
+      <RouteStoryboard
+        id="v2-profile"
+        name="v2 · Profile"
+        route="/v2/profile"
+        layout={{ x: 2390, y: 2481, width: 390, height: 844 }}
+      />
+      <RouteStoryboard
+        id="v2-campus"
+        name="v2 · Campus identified"
+        route="/v2/campus"
+        layout={{ x: 40, y: 3465, width: 390, height: 844 }}
+      />
+      <RouteStoryboard
+        id="v2-map"
+        name="v2 · Map"
+        route="/v2/map"
+        layout={{ x: 510, y: 3465, width: 390, height: 844 }}
+      />
+      <RouteStoryboard
+        id="v2-messages"
+        name="v2 · Messages"
+        route="/v2/messages"
+        layout={{ x: 980, y: 3465, width: 390, height: 844 }}
+      />
+      <RouteStoryboard
+        id="v2-chat"
+        name="v2 · Group chat"
+        route="/v2/chat"
+        layout={{ x: 1450, y: 3465, width: 390, height: 844 }}
+      />
+      <RouteStoryboard
+        id="v2-create"
+        name="v2 · New event"
+        route="/v2/create"
+        layout={{ x: 1920, y: 3465, width: 390, height: 844 }}
+      />
+      <RouteStoryboard
+        id="v2-posted"
+        name="v2 · It’s live"
+        route="/v2/posted"
+        layout={{ x: 2390, y: 3465, width: 390, height: 844 }}
+      />
     </Canvas>
   );
 }

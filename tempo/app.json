@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "mobbin-app-draft Tempo",
+    "slug": "mobbin-app-draft-tempo",
+    "platforms": [
+      "web"
+    ],
+    "web": {
+      "bundler": "metro"
+    },
+    "scheme": "tempo-sidecar"
+  }
+}

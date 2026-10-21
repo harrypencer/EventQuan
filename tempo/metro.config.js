@@ -1,4 +1,9 @@
-// @tempo-owned: expo-metro-config
+// Project-owned (forked from Tempo's generated `expo-metro-config` template,
+// stamp tempo-metrocfg-v13). The `@tempo-owned` marker is deliberately
+// removed so Tempo's reconcile step stops rewriting this file: the generated
+// template disables package exports, which breaks `@expo/metro-runtime` on
+// Expo SDK 58 (see `exportsOnlySubpathPackages` below). If a future Tempo
+// template fixes that, delete this file and rerun canvas_project_init.
 const path = require("node:path");
 const { getDefaultConfig } = require("expo/metro-config");
 
@@ -107,6 +112,33 @@ const tempoSdkRuntimeModules = {
   "tempo-sdk/assets": path.join(sidecarNodeModules, "tempo-sdk", "dist", "assets", "index.js"),
 };
 
+// Packages whose subpaths exist ONLY through their package.json `exports` map.
+// With package exports disabled above, Metro looks for the subpath on disk
+// (`<pkg>/LogBox.js`), finds nothing, and fails the WHOLE sidecar bundle.
+// `@expo/metro-runtime` (pulled in by index.js on Expo SDK 58) does
+// `require('@expo/log-box/LogBox')`, which maps to `./build/LogBox.js` —
+// resolve such subpaths through the map by hand. Looks in the sidecar
+// node_modules first, then the parent project's (where Expo is hoisted).
+const exportsOnlySubpathPackages = ["@expo/log-box"];
+const resolveViaExportsMap = (moduleName) => {
+  const pkg = exportsOnlySubpathPackages.find((p) => moduleName.startsWith(p + "/"));
+  if (!pkg) return null;
+  const subpath = "." + moduleName.slice(pkg.length);
+  for (const nmRoot of [sidecarNodeModules, path.join(workspaceRoot, "node_modules")]) {
+    const pkgRoot = path.join(nmRoot, ...pkg.split("/"));
+    let exportsMap;
+    try {
+      exportsMap = require(path.join(pkgRoot, "package.json")).exports;
+    } catch {
+      continue;
+    }
+    let target = exportsMap?.[subpath];
+    while (target && typeof target === "object") target = target.default;
+    if (typeof target === "string") return path.join(pkgRoot, target);
+  }
+  return null;
+};
+
 // Mirror the user app's tsconfig.paths so canvas imports like
 // "@/app/components/X" resolve through Metro the same way TypeScript and
 // the user's app already resolve them. The aliases array below is baked
@@ -155,6 +187,10 @@ config.resolver.resolveRequest = (context, moduleName, platform) => {
   const tempoSdkRuntimeModule = tempoSdkRuntimeModules[moduleName];
   if (tempoSdkRuntimeModule) {
     return context.resolveRequest(context, tempoSdkRuntimeModule, platform);
+  }
+  const exportsMapTarget = resolveViaExportsMap(moduleName);
+  if (exportsMapTarget) {
+    return context.resolveRequest(context, exportsMapTarget, platform);
   }
   if (platform === "web") {
     const shimRel = tempoWebShims[moduleName];
